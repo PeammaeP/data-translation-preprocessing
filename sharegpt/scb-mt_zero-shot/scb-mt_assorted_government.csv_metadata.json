@@ -1,0 +1,8 @@
+{
+  "total_conversations": 1,
+  "prompt_style": "zero-shot",
+  "few_shot_k": 0,
+  "datasets": {
+    "scb_mt_train": 25398
+  }
+}
