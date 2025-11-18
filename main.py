@@ -3,14 +3,13 @@ import os
 from pathlib import Path
 
 from conversion import convert_datasets
-from template import prompt_template
 
 if __name__ == "__main__":
     print("Dataset to ShareGPT Converter")
     print("Following the research-backed prompting strategies")
 
     dataset = "scb-mt"
-    prompt_style = "zero-shot"
+    prompt_style = "one-shot"
     few_shot_k = None
     conversion = []
     current_file_name = None
