@@ -36,7 +36,7 @@ def convert_datasets(
                 context_pool_size=context_pool_size,
                 which_file=which_file,
             )
-            conversion.append(("scb_mt_train", scb_data))
+            conversion.append(scb_data)
         except Exception as e:
             print(f"Error converting SCB-MT {e}")
 
