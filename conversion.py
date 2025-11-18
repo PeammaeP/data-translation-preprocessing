@@ -43,18 +43,4 @@ def convert_datasets(
         json.dump(conversion, f, ensure_ascii=False, indent=2)
     print(f"\n Saved {len(conversion)} to {path}")
 
-    # Create metadata file
-    metadata = {
-        "total_conversations": len(conversion),
-        "prompt_style": prompt_style,
-        "few_shot_k": few_shot_k if prompt_style == "few_shot" else 0,
-        "datasets": {name: len(data) for name, data in conversion},
-    }
-
-    metadata_path = os.path.join(
-        output_dir, f"{which_dataset}_{which_file}_metadata.json"
-    )
-    with open(metadata_path, "w", encoding="utf-8") as f:
-        json.dump(metadata, f, indent=2)
-
     return conversion
