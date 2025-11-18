@@ -1,4 +1,4 @@
-# SCB-MT to ShareGPT Converter
+# ShareGPT Converter
 
 This tool creates instruction-tuning datasets for Large Language Models (LLMs) by converting the [SCB-MT-2020](https://github.com/vistec-AI/dataset) English–Thai translation dataset into the **ShareGPT** format.
 
