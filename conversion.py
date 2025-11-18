@@ -9,6 +9,7 @@ def convert_datasets(
     samples_per_dataset=None,
     prompt_style="structured",
     few_shot_k=1,
+    context_pool_size=1000,
     which_dataset=None,
     which_file=None,
 ):
@@ -32,6 +33,7 @@ def convert_datasets(
                 max_samples=samples_per_dataset,
                 prompt_style=prompt_style,
                 few_shot_k=few_shot_k,
+                context_pool_size=context_pool_size,
                 which_file=which_file,
             )
             conversion.append(("scb_mt_train", scb_data))
