@@ -38,7 +38,9 @@ def convert_datasets(
         except Exception as e:
             print(f"Error converting SCB-MT {e}")
 
-    path = os.path.join(output_dir, f"{which_dataset}_{which_file}_sharegpt.json")
+    path = os.path.join(
+        output_dir, f"{which_dataset}_{which_file}_{prompt_style}_sharegpt.json"
+    )
     with open(path, "w", encoding="utf-8") as f:
         json.dump(conversion, f, ensure_ascii=False, indent=2)
     print(f"\n Saved {len(conversion)} to {path}")

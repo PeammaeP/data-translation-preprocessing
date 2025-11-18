@@ -10,7 +10,7 @@ if __name__ == "__main__":
 
     dataset = "scb-mt"
     prompt_style = "one-shot"
-    few_shot_k = None
+    few_shot_k = 1
     conversion = []
     current_file_name = None
     output_dir = f"./sharegpt/{dataset}_{prompt_style}"
@@ -28,15 +28,16 @@ if __name__ == "__main__":
                 samples_per_dataset=None,
                 which_dataset=dataset,
                 prompt_style=prompt_style,
+                few_shot_k=few_shot_k,
                 # Pass the current filename in a list
                 which_file=current_file_name,
             )
 
-            if conversion:
-                print("\n Example Output (First Conversation):")
-                print(json.dumps(conversion[0], ensure_ascii=False, indent=2))
-            else:
-                print("No data processed or returned for this file")
+            # if conversion:
+            #     print("\n Example Output (First Conversation):")
+            #     print(json.dumps(conversion[0], ensure_ascii=False, indent=2))
+            # else:
+            #     print("No data processed or returned for this file")
 
     # Create metadata file
     metadata = {

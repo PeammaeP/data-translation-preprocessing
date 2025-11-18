@@ -30,26 +30,32 @@ def convert_scb_mt_to_sharegpt(
         dataset = dataset.select(range(min(max_samples, len(dataset))))
 
     # Create context pool for few-shot examples
-    context_pool = []
+    context_pool_list = []
+    context_indices_set = set()
 
-    if prompt_style in ["one_shot", "few_shot"] and context_pool_size > 0:
+    if prompt_style in ["one-shot", "few-shot"] and context_pool_size > 0:
         pool_size = min(context_pool_size, len(dataset))
+
         context_indices = random.sample(range(len(dataset)), pool_size)
-        context_pool.append([dataset[i] for i in context_indices])
+        context_indices_set = set(context_indices)
+
+        context_pool_list = dataset.select(context_indices).to_list()
 
     sharegpt_data = []
     template = TranslationPromptTemplate()
 
     for idx, item in enumerate(dataset):
         # Skip if item is in context pool to avoid data leakage
-        if idx in [dataset.index(c) for c in context_pool[:10]]:
+        if idx in context_indices_set:
             continue
 
+        prompt = ""
+
         # EN -> TH Translation
-        if prompt_style == "zero_shot":
+        if prompt_style == "zero-shot":
             prompt = template.zero_shot(item["en_text"], "English", "Thai")
-        elif prompt_style == "one_shot" and context_pool:
-            example = random.choice(context_pool)
+        elif prompt_style == "one-shot" and context_pool_list:
+            example = random.choice(context_pool_list)
             prompt = template.one_shot(
                 item["en_text"],
                 example["en_text"],
@@ -57,8 +63,11 @@ def convert_scb_mt_to_sharegpt(
                 "English",
                 "Thai",
             )
-        elif prompt_style == "few_shot" and context_pool:
-            examples = random.sample(context_pool, min(few_shot_k, len(context_pool)))
+        elif prompt_style == "few-shot" and context_pool_list:
+            k = min(few_shot_k, len(context_pool_list))
+
+            examples = random.sample(context_pool_list, k)
+
             example_pairs = [(ex["en_text"], ex["th_text"]) for ex in examples]
             prompt = template.few_shot(
                 item["en_text"], "English", "Thai", example_pairs
