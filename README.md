@@ -1,6 +1,6 @@
 # ShareGPT Converter
 
-This tool creates instruction-tuning datasets for Large Language Models (LLMs) by converting the [SCB-MT-2020](https://github.com/vistec-AI/dataset) English–Thai translation dataset into the **ShareGPT** format.
+This tool creates instruction-tuning datasets for Large Language Models (LLMs) by converting datasets from English to Thai translation dataset into the **ShareGPT** format.
 
 It supports various prompting strategies (zero-shot, one-shot, few-shot, and structured) to improve model performance during fine-tuning.
 
