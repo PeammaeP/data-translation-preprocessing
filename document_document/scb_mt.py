@@ -12,6 +12,7 @@ def convert_scb_mt_to_sharegpt(
     few_shot_k=0,
     context_pool_size=1000,
     which_file=None,
+    translation="en2th",
 ):
     """
     Convert SCB-MT-EN-TH-2020 to "sharegpt" format with various prompting strategies
@@ -49,39 +50,52 @@ def convert_scb_mt_to_sharegpt(
         if idx in context_indices_set:
             continue
 
+        if translation == "en2th":
+            src_lang = "English"
+            tgt_lang = "Thai"
+            ex_src_key = "en_text"
+            ex_tgt_key = "th_text"
+            src_text = item[ex_src_key]
+            tgt_text = item[ex_tgt_key]
+        else:
+            src_lang = "Thai"
+            tgt_lang = "English"
+            ex_src_key = "th_text"
+            ex_tgt_key = "en_text"
+            src_text = item[ex_src_key]
+            tgt_text = item[ex_tgt_key]
+
         prompt = ""
 
         # EN -> TH Translation
         if prompt_style == "zero-shot":
-            prompt = template.zero_shot(item["en_text"], "English", "Thai")
+            prompt = template.zero_shot(src_text, src_lang, tgt_lang)
         elif prompt_style == "one-shot" and context_pool_list:
             example = random.choice(context_pool_list)
             prompt = template.one_shot(
-                item["en_text"],
-                example["en_text"],
-                example["th_text"],
-                "English",
-                "Thai",
+                src_text,
+                example[ex_src_key],
+                example[ex_tgt_key],
+                src_lang,
+                tgt_lang,
             )
         elif prompt_style == "few-shot" and context_pool_list:
             k = min(few_shot_k, len(context_pool_list))
 
             examples = random.sample(context_pool_list, k)
 
-            example_pairs = [(ex["en_text"], ex["th_text"]) for ex in examples]
-            prompt = template.few_shot(
-                item["en_text"], "English", "Thai", example_pairs
-            )
+            example_pairs = [(ex[ex_src_key], ex[ex_tgt_key]) for ex in examples]
+            prompt = template.few_shot(src_text, src_lang, tgt_lang, example_pairs)
         else:  # structured (default)
-            prompt = template.structured_format(item["en_text"], "English", "Thai")
+            prompt = template.structured_format(src_text, src_lang, tgt_lang)
 
         sharegpt_data.append(
             {
                 "conversations": [
                     {"from": "human", "value": prompt},
-                    {"from": "gpt", "value": item["th_text"]},
+                    {"from": "gpt", "value": tgt_text},
                 ],
-                "system": "You are a professional English-Thai translator.",
+                "system": f"You are a professional {src_lang}-{tgt_lang} translator.",
             }
         )
 

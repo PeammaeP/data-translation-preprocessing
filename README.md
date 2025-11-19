@@ -7,6 +7,7 @@ It supports various prompting strategies (zero-shot, one-shot, few-shot, and str
 ---
 
 ## 🌟 Features
+- **Bidirectional Support** Switch easily between English-to-Thai (`en2th`) and Thai-to-English (`th2en`) translation directions.
 
 - **Multiple Prompt Styles**  
   Convert data using `structured`, `zero-shot`, `one-shot`, or `few-shot` formats.
@@ -169,6 +170,17 @@ If your raw CSV files are in a different location:
 python main.py --data_dir "./raw_data" --dataset "custom-dataset"
 ```
 
+### 6. Change Translation Direction
+
+By default, the tool converts **English → Thai**. You can switch the direction to **Thai → English** using the `--direction` argument.
+
+```bash
+# Convert from Thai to English
+python main.py --direction th2en
+
+# Combine with other styles (e.g., Few-Shot Thai -> English)
+python main.py --direction th2en --prompt_style few-shot --few_shot_k 3
+
 ---
 
 ## ⚙️ Arguments Reference
@@ -180,7 +192,7 @@ python main.py --data_dir "./raw_data" --dataset "custom-dataset"
 | `--data_dir`     | str  | `data/scb_2020` | Directory containing the input CSV files.                  |
 | `--few_shot_k`   | int  | `0`             | Number of examples to use (only for few-shot style).       |
 | `--pool_size`    | int  | `1000`          | Number of samples to reserve for context generation.       |
-
+| `--direction`    | str  | `en2th`         | Translation direction: `en2th` (Eng→Thai) or `th2en` (Thai→Eng) |
 ---
 
 ## ⚠️ Troubleshooting

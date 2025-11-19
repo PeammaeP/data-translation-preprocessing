@@ -12,6 +12,7 @@ def convert_datasets(
     context_pool_size=1000,
     which_dataset=None,
     which_file=None,
+    translation="en2th",
 ):
     """
     Convert all datasets to ShareGPT formart following best practices
@@ -35,6 +36,7 @@ def convert_datasets(
                 few_shot_k=few_shot_k,
                 context_pool_size=context_pool_size,
                 which_file=which_file,
+                translation=translation,
             )
             conversion.append(scb_data)
         except Exception as e:

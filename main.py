@@ -15,12 +15,18 @@ def parse_arguments():
         default="scb-mt",
         help="Name of the dataset (default: scb-mt)",
     )
-
     parser.add_argument(
         "--data_dir",
         type=str,
         default="data/scb_2020",
         help="Path to the dictionary containing CSV files",
+    )
+
+    parser.add_argument(
+        "--translation",
+        type=str,
+        default="en2th",
+        help="Translate from source to target language",
     )
 
     parser.add_argument(
@@ -58,7 +64,7 @@ if __name__ == "__main__":
     if args.prompt_style == "few-shot":
         print(f"K-Shot: {args.few_shot_k}")
 
-    output_dir = f"./sharegpt/{args.dataset}_{args.prompt_style}"
+    output_dir = f"./sharegpt/{args.dataset}_{args.translation}_{args.prompt_style}"
     # Define the directory to iterative over
     data_dir = Path("data/scb_2020")
 
@@ -82,6 +88,7 @@ if __name__ == "__main__":
                 context_pool_size=args.pool_size,
                 which_dataset=args.dataset,
                 which_file=current_file_name,
+                translation=args.translation,
             )
 
             if conversion:
@@ -98,7 +105,8 @@ if __name__ == "__main__":
     }
 
     metadata_path = os.path.join(
-        output_dir, f"{args.dataset}_{args.prompt_style}_metadata.json"
+        output_dir,
+        f"{args.dataset}_{args.translation}_{args.prompt_style}_metadata.json",
     )
     with open(metadata_path, "w", encoding="utf-8") as f:
         json.dump(metadata, f, indent=2)
