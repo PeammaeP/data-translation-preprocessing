@@ -66,7 +66,7 @@ if __name__ == "__main__":
 
     output_dir = f"./sharegpt/{args.dataset}_{args.translation}_{args.prompt_style}"
     # Define the directory to iterative over
-    data_dir = Path("data/scb_2020")
+    data_dir = Path(f"data/{args.data_dir}")
 
     conversion_result = []
     current_file_name = None
@@ -89,6 +89,7 @@ if __name__ == "__main__":
                 which_dataset=args.dataset,
                 which_file=current_file_name,
                 translation=args.translation,
+                data_dir=data_dir,
             )
 
             if conversion:

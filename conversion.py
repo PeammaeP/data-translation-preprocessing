@@ -13,6 +13,7 @@ def convert_datasets(
     which_dataset=None,
     which_file=None,
     translation="en2th",
+    data_dir=None,
 ):
     """
     Convert all datasets to ShareGPT formart following best practices
@@ -27,20 +28,19 @@ def convert_datasets(
 
     conversion = []
 
-    if which_dataset == "scb-mt":
-        print("\n=== Conversting SCB-MT-EN-TH-2020 ===")
-        try:
-            scb_data = convert_scb_mt_to_sharegpt(
-                max_samples=samples_per_dataset,
-                prompt_style=prompt_style,
-                few_shot_k=few_shot_k,
-                context_pool_size=context_pool_size,
-                which_file=which_file,
-                translation=translation,
-            )
-            conversion.append(scb_data)
-        except Exception as e:
-            print(f"Error converting SCB-MT {e}")
+    try:
+        data = convert_scb_mt_to_sharegpt(
+            max_samples=samples_per_dataset,
+            prompt_style=prompt_style,
+            few_shot_k=few_shot_k,
+            context_pool_size=context_pool_size,
+            which_file=which_file,
+            translation=translation,
+            data_dir=data_dir,
+        )
+        conversion.append(data)
+    except Exception as e:
+        print(f"Error converting SCB-MT {e}")
 
     path = os.path.join(
         output_dir, f"{which_dataset}_{which_file}_{prompt_style}_sharegpt.json"

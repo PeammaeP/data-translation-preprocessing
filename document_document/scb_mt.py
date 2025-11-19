@@ -13,6 +13,7 @@ def convert_scb_mt_to_sharegpt(
     context_pool_size=1000,
     which_file=None,
     translation="en2th",
+    data_dir=None,
 ):
     """
     Convert SCB-MT-EN-TH-2020 to "sharegpt" format with various prompting strategies
@@ -23,8 +24,8 @@ def convert_scb_mt_to_sharegpt(
         few_shot_k: Number of examples for few-shot (0-5 recommended)
         context_pool_size: Size of context pool for fuzzy matching
     """
-    print("Loading SCB-MT-EN-TH-2020 ...")
-    df = pd.read_csv(f"./data/scb_2020/{which_file}")
+    print("Loading Dataset ...")
+    df = pd.read_csv(f"{data_dir}/{which_file}")
     dataset = Dataset.from_pandas(df)
 
     if max_samples:

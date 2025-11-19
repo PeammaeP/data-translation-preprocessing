@@ -181,6 +181,11 @@ python main.py --direction th2en
 # Combine with other styles (e.g., Few-Shot Thai -> English)
 python main.py --direction th2en --prompt_style few-shot --few_shot_k 3
 ```
+
+### Example for change the file directory of the dataset
+```bash
+python main.py --dataset "opensubtitles" --data_dir "opensubtitles" --translation en2th --prompt_style zero-shot
+```
 ---
 ## ⚙️ Arguments Reference
 
