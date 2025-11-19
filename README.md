@@ -180,9 +180,8 @@ python main.py --direction th2en
 
 # Combine with other styles (e.g., Few-Shot Thai -> English)
 python main.py --direction th2en --prompt_style few-shot --few_shot_k 3
-
+```
 ---
-
 ## ⚙️ Arguments Reference
 
 | Argument        | Type | Default         | Description                                                 |
@@ -194,7 +193,6 @@ python main.py --direction th2en --prompt_style few-shot --few_shot_k 3
 | `--pool_size`    | int  | `1000`          | Number of samples to reserve for context generation.       |
 | `--direction`    | str  | `en2th`         | Translation direction: `en2th` (Eng→Thai) or `th2en` (Thai→Eng) |
 ---
-
 ## ⚠️ Troubleshooting
 
 ### “File is too large” error when pushing
